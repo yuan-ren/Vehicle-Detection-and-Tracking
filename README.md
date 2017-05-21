@@ -75,12 +75,11 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ![alt text][image4]
 
-### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
+### Here are the integrated heatmap from all six frames and the output of `scipy.ndimage.measurements.label()` on the integrated heatmap after thresholding:
 ![alt text][image5]
 
-### Here the resulting bounding boxes are drawn onto the last frame in the series:
+### Here is the resulting bounding boxes are drawn onto the last frame in the series:
 ![alt text][image6]
-
 
 
 ---
@@ -89,5 +88,8 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Main problem in this project is that the classifier is not very stable, even though a high accuracy is achieved in classification. Different from convolutional neural network, the linear SVM classifier doesn't capture translation invariance, so it is sensitive to window size and position.
+To get around this, it is necessary to use muli-scale windows with small steps in scanning images, which adds a large computation burden and slows down processing.
+
+Heatmap is another useful technique to work with instable classifier. False positive detection can be removed by kicking out anomalies in a series of detection results. However, this way increases response time of the pipeline. As a result, it can be seen that the bounding box falls behind the fast moving car in the video.
 
